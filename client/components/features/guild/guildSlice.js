@@ -5,16 +5,16 @@ const initialState = [];
 
 export const fetchGuildAsync = createAsyncThunk("guild", async () => {
   try {
-    const { data } = await axios.get(`https://us.api.blizzard.com/data/wow/guild/illidan/umbra?namespace=profile-us&locale=en_US&access_token=${token}`);
-    console.log(data)
+    const { data } = await axios.get(`/api/guild`);
+    //console.log(data)
     return data.name;
   } catch (err) {
     console.log(err);
   }
 });
 
-const homeSlice = createSlice({
-  name: "home",
+const guildSlice = createSlice({
+  name: "guild",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
@@ -24,9 +24,9 @@ const homeSlice = createSlice({
   },
 });
 
-export const selectHome = (state) => {
-  console.log(state.home);
-  return state.home;
+export const selectGuild = (state) => {
+  console.log(state)
+  return state.guild;
 };
 
-export default homeSlice.reducer;
+export default guildSlice.reducer;
