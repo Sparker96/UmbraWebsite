@@ -1,21 +1,39 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { selectGuild, fetchGuildAsync, fetchMembersAsync } from "./homeSlice";
+import { selectMember, fetchMemberAsync } from "./memberSlice";
+import {
+  selectMemberMedia,
+  fetchMemberMediaAsync,
+} from "../memberMedia/memberMediaSlice";
+import { useParams } from "react-router-dom";
 
-
-const Home = () => {
+const Member = () => {
   const dispatch = useDispatch();
+  const { name } = useParams();
 
   useEffect(() => {
-    dispatch(fetchGuildAsync());
-    dispatch(fetchMembersAsync());
+    dispatch(fetchMemberAsync(name));
+    dispatch(fetchMemberMediaAsync(name));
   }, [dispatch]);
 
-  const guild = useSelector(selectGuild)
+  const member = useSelector(selectMember);
 
-  //console.log(guild);
+  const media = useSelector(selectMemberMedia);
 
-  return <h1>{guild}</h1>;
+  console.log("member", member);
+  console.log("media", media);
+
+  return (
+    <>
+      {!member == null || !media == null ? (
+        <h1>Loading</h1>
+      ) : (
+        <div className="memberPage">
+          <h1>{member.name}</h1>
+        </div>
+      )}
+    </>
+  );
 };
 
-export default Home;
+export default Member;

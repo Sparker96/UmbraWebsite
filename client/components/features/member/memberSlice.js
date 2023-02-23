@@ -3,10 +3,9 @@ import axios from "axios";
 
 const initialState = [];
 
-export const fetchMembersAsync = createAsyncThunk("members", async () => {
+export const fetchMemberAsync = createAsyncThunk("member", async (name) => {
   try {
-    const { data } = await axios.get(`/api/members`);
-    console.log(data);
+    const { data } = await axios.get(`/api/member/${name}`);
     return data;
   } catch (err) {
     console.log(err);
@@ -18,14 +17,13 @@ const memberSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(fetchMembersAsync.fulfilled, (state, action) => {
+    builder.addCase(fetchMemberAsync.fulfilled, (state, action) => {
       return action.payload;
-    });
+    }).then;
   },
 });
 
 export const selectMember = (state) => {
-  console.log(state)
   return state.member;
 };
 

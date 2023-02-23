@@ -1,17 +1,19 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import About from "../components/features/about";
-import Apply from "../components/features/apply";
-import Home from "../components/features/home";
-import Teams from "../components/features/teams";
+import Members from "./features/members";
+import Apply from "./features/apply";
+import Home from "./features/home";
+import Teams from "./features/teams";
+import Member from "./features/member";
 
 const App = () => {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/raidTeams" element={<Teams />} />
-      <Route path="/about" element={<About />} />
+      <Route path="/members" element={<Members />} />
       <Route path="/apply" element={<Apply />} />
+      <Route path="/member/:name" element={<Member />} />
     </Routes>
   );
 };

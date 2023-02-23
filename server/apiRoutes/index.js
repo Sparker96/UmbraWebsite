@@ -5,6 +5,7 @@ require("dotenv").config();
 router.use("/applicants", require("./applicants")); // matches all requests to /api/applicants/
 router.use("/guild", require("./guild")); // matches all requests to  /api/guild/
 router.use("/members", require("./members")); // matches all requests to /api/members/
+router.use("/member", require("./member")); // matches all requests to /api/member/
 router.use("/raiders", require("./raiders")); // matches all requests to /api/raiders/
 router.use("/subs", require("./subs")); // matches all requests to /api/subs/
 
