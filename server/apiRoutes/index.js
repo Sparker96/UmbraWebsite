@@ -3,6 +3,7 @@ const axios = require("axios");
 require("dotenv").config();
 
 router.use("/applicants", require("./applicants")); // matches all requests to /api/applicants/
+router.use("/class", require("./class")); // matches all requests to  /api/class/
 router.use("/guild", require("./guild")); // matches all requests to  /api/guild/
 router.use("/members", require("./members")); // matches all requests to /api/members/
 router.use("/member", require("./member")); // matches all requests to /api/member/

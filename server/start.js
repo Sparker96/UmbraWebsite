@@ -1,4 +1,5 @@
 const db = require("./database/db");
+const seed = require("./database/seed")
 const { app, fetchToken } = require("./index.js");
 const PORT = process.env.PORT;
 const { Token, Member, Raider } = require("./database/models/index");
@@ -6,8 +7,7 @@ const { Token, Member, Raider } = require("./database/models/index");
 async function saveToken() {
   try {
     await db.sync({ force: true });
-    const token = await Token.create({ access_token: await fetchToken() });
-    console.log("start our token in db", token.access_token);
+    await Token.create({ access_token: await fetchToken() });
   } catch (err) {
     console.error("Oh noes! Something went wrong!");
     console.error(err);
