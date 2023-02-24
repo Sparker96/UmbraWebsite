@@ -22,7 +22,6 @@ const Members = () => {
 
   function sortGuildRankDescending(members) {
     let sortedMembersByRankD = [...members].sort((a, b) => a.guildRankId - b.guildRankId);
-    console.log(sortedMembersByRankD)
     return sortedMembersByRankD;
   }
 
@@ -36,8 +35,10 @@ const Members = () => {
           <table className="membersTable">
             <tr>
               <th>Name</th>
+              <th>Class</th>
               <th>Level</th>
-              <th>Class Id</th>
+              <th>Item Level</th>
+              <th>Guild Rank</th>
             </tr>
             {sortGuildRankDescending(members).map((member) => {
               return (
@@ -45,8 +46,10 @@ const Members = () => {
                   <td>
                     <Link to={`/member/${member.name}`}>{member.name}</Link>
                   </td>
+                  <td style={{color: `${member.classColor}`}}>{member.class}</td>
                   <td>{member.level}</td>
-                  <td>{member.class}</td>
+                  <td>{member.itemLevel}</td>
+                  <td>{member.guildRank}</td>
                 </tr>
               );
             })}

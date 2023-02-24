@@ -11,6 +11,10 @@ const Member = db.define("member", {
     type: Sequelize.STRING,
     allowNull: false,
   },
+  classColor: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
   spec: {
     type: Sequelize.STRING,
     allowNull: false,

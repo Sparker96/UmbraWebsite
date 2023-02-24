@@ -5,7 +5,7 @@ const initialState = [];
 
 export const fetchMemberAsync = createAsyncThunk("member", async (name) => {
   try {
-    const { data } = await axios.get(`/api/member/${name}`);
+    const { data } = await axios.get(`/api/members/${name}`);
     return data;
   } catch (err) {
     console.log(err);

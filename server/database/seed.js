@@ -19,28 +19,20 @@ function rankFinder(rankId) {
   switch (rankId) {
     case 0:
       return "Guild Master";
-      break;
     case 1:
       return "CO-Guild Master";
-      break;
     case 2:
       return "Officer";
-      break;
     case 3:
       return "Officer Alt";
-      break;
     case 4:
       return "Core Raider";
-      break;
     case 5:
       return "Core Sub";
-      break;
     case 6:
       return "Trial Raider";
-      break;
     case 7:
       return "Member";
-      break;
     default:
       return null;
   }
@@ -55,7 +47,6 @@ function roleFinder(spec) {
       "Brewmaster" ||
       "Protection":
       return "Tank";
-      break;
     case "Restoration" ||
       "Mistweaver" ||
       "Holy" ||
@@ -63,9 +54,41 @@ function roleFinder(spec) {
       "Restoration" ||
       "Preservation Evoker":
       return "Healer";
-      break;
     default:
       return "Dps";
+  }
+}
+
+function classColor(charClass) {
+  switch (charClass) {
+    case "Death Knight":
+      return "#C41E3A";
+    case "Demon Hunter":
+      return "#A330C9";
+    case "Druid":
+      return "#FF7C0A";
+    case "Evoker":
+      return "#33937F";
+    case "Hunter":
+      return "#AAD372";
+    case "Mage":
+      return "#3FC7EB";
+    case "Monk":
+      return "#00FF98";
+    case "Paladin":
+      return "#F48CBA";
+    case "Priest":
+      return "#FFFFFF";
+    case "Rogue":
+      return "#FFF468";
+    case "Shaman":
+      return "#0070DD";
+    case "Warlock":
+      return "#8788EE";
+    case "Warrior":
+      return "#C69B6D";
+    default:
+      return null;
   }
 }
 
@@ -100,6 +123,7 @@ async function seedMembers() {
           member.character.spec = data.active_spec.name;
           member.character.role = roleFinder(data.active_spec.name);
           member.character.class = charClass.name;
+          member.character.classColor = classColor(charClass.name);
           member.character.playable_class.name = charClass.name;
           member.character.itemLevel = data.average_item_level;
           try {
@@ -145,24 +169,3 @@ async function seed() {
 }
 
 module.exports = seed;
-
-// const seed = async () => {
-//   try {
-//     await db.sync({ force: true });
-
-//     await Promise.all(
-//       candies.map((candy) => {
-//         return Candy.create(candy);
-//       })
-//     );
-
-//     console.log(green("Seeding success!"));
-//     db.close();
-//   } catch (err) {
-//     console.error(red("Oh noes! Something went wrong!"));
-//     console.error(err);
-//     db.close();
-//   }
-// };
-
-// seed();
