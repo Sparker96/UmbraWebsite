@@ -39,6 +39,10 @@ const Member = db.define("member", {
     type: Sequelize.INTEGER,
     allowNull: false,
   },
+  itemLevelColor: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
   avatarMedia: {
     type: Sequelize.STRING,
     allowNull: false,

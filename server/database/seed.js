@@ -92,6 +92,27 @@ function classColor(charClass) {
   }
 }
 
+function itemLevelColor(itemLevel) {
+  if (itemLevel > 420) {
+    return "Red";
+  }
+  if (itemLevel > 415) {
+    return "Orange";
+  }
+  if (itemLevel > 410) {
+    return "Purple";
+  }
+  if (itemLevel > 400) {
+    return "Blue";
+  }
+  if (itemLevel > 380) {
+    return "Green";
+  }
+  if (itemLevel > 350) {
+    return "White";
+  } else return "Gray";
+}
+
 async function seedClass() {
   try {
     let { data } = await axios.get(
@@ -116,36 +137,43 @@ async function seedMembers() {
       member.character.guildRank = rankFinder(member.rank);
       let charClass = await Class.findByPk(member.character.playable_class.id);
       await setTimeout(async () => {
-        if (member.character.level !== 1) {
-          let { data } = await axios.get(
-            `${BEGIN_URL_CHARACTER}${member.character.name.toLowerCase()}${CONFIG_URL_PLAYER}${await GET_TOKEN()}`
-          );
-          member.character.spec = data.active_spec.name;
-          member.character.role = roleFinder(data.active_spec.name);
-          member.character.class = charClass.name;
-          member.character.classColor = classColor(charClass.name);
-          member.character.playable_class.name = charClass.name;
-          member.character.itemLevel = data.average_item_level;
-          try {
-            let { data } = await axios.get(
-              `${BEGIN_URL_CHARACTER}${member.character.name.toLowerCase()}/character-media${CONFIG_URL_PLAYER}${await GET_TOKEN()}`
-            );
-            member.character.avatarMedia = data.assets[0].value;
-            member.character.insetMedia = data.assets[1].value;
-            member.character.mainMedia = data.assets[2].value;
-            member.character.mainRawMedia = data.assets[3].value;
-          } catch (err) {
-            console.log("probz svensif");
-            data =
-              "https://www.citypng.com/public/uploads/preview/png-red-question-symbol-mark-icon-11664604913fofuexjtok.png";
-            member.character.avatarMedia = data;
-            member.character.insetMedia = data;
-            member.character.mainMedia = data;
-            member.character.mainRawMedia = data;
-          }
+        try {
+          if (member.character.level !== 1) {
+            try {
+              let { data } = await axios.get(
+                `${BEGIN_URL_CHARACTER}${member.character.name.toLowerCase()}${CONFIG_URL_PLAYER}${await GET_TOKEN()}`
+              );
+              member.character.spec = data.active_spec.name;
+              member.character.role = roleFinder(data.active_spec.name);
+              member.character.class = charClass.name;
+              member.character.classColor = classColor(charClass.name);
+              member.character.playable_class.name = charClass.name;
+              member.character.itemLevel = data.average_item_level;
+              member.character.itemLevelColor = itemLevelColor(
+                member.character.itemLevel
+              );
+            } catch (err) {}
+            try {
+              let { data } = await axios.get(
+                `${BEGIN_URL_CHARACTER}${member.character.name.toLowerCase()}/character-media${CONFIG_URL_PLAYER}${await GET_TOKEN()}`
+              );
+              member.character.avatarMedia = data.assets[0].value;
+              member.character.insetMedia = data.assets[1].value;
+              member.character.mainMedia = data.assets[2].value;
+              member.character.mainRawMedia = data.assets[3].value;
+            } catch (err) {
+              console.log("probz svensif");
+              data =
+                "https://www.citypng.com/public/uploads/preview/png-red-question-symbol-mark-icon-11664604913fofuexjtok.png";
+              member.character.avatarMedia = data;
+              member.character.insetMedia = data;
+              member.character.mainMedia = data;
+              member.character.mainRawMedia = data;
+            }
 
-          Member.create(member.character);
-        }
+            Member.create(member.character);
+          }
+        } catch (err) {}
       }, i * 40);
     });
   } catch (err) {

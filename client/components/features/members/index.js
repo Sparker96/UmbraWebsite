@@ -48,7 +48,7 @@ const Members = () => {
                   </td>
                   <td style={{color: `${member.classColor}`}}>{member.class}</td>
                   <td>{member.level}</td>
-                  <td>{member.itemLevel}</td>
+                  <td style={{color: `${member.itemLevelColor}`}}>{member.itemLevel}</td>
                   <td>{member.guildRank}</td>
                 </tr>
               );
