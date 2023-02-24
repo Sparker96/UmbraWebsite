@@ -1,6 +1,13 @@
+html,
+body,
+#app {
+  height: 100%;
+}
+
 body {
   background-color: rgb(39, 1, 39);
   color: white;
+  margin: 0;
 }
 /*^^^^^^ BODY ^^^^^^^^ */
 
@@ -34,28 +41,28 @@ body {
 
 /*^^^^^^ NavBar ^^^^^^^^ */
 
-.homePage h1, h2, p{
+.homePage h1,
+h2,
+p {
   text-align: center;
 }
 
-.homePage h1{
+.homePage h1 {
   padding-bottom: 0px;
   margin-bottom: 0px;
   border-bottom: 0px;
 }
 
-.homePage h2{
+.homePage h2 {
   padding-top: 0px;
   margin-top: 0px;
   border-top: 0px;
   font-style: italic;
 }
 
-
-
 /*^^^^^^ HomePage ^^^^^^^^ */
 
-.membersHeader{
+.membersHeader {
   text-align: center;
 }
 
@@ -65,7 +72,8 @@ body {
   width: 100%;
 }
 
-.membersTable td, th {
+.membersTable td,
+th {
   border: 1px solid black;
   text-align: left;
   padding: 8px;
@@ -102,7 +110,78 @@ body {
 /*^^^^^^ MembersTable ^^^^^^^^ */
 
 .memberPage {
-  color: white;
+  display: contents;
+}
+
+.memberContainer {
+  display: flex;
+  flex-flow: column;
+  height: 100%;
+}
+
+.memberPage .memberHeader {
+  flex: 0 1 10%;
+  display: flex;
+}
+
+.memberPage .memberSummary {
+  width: 100%;
+  display: flex;
+}
+
+.memberPage .memberSummary #memberAvatar>img{
+  width: 100%;
+  height: 100%;
+}
+
+.memberPage .memberSummary #memberDetails ul{
+  list-style-type: none;
+}
+
+
+.memberPage .memberLinks {
+  display: flex;
+  width: 100%;
+  justify-content: space-evenly;
+}
+
+.memberPage .memberLinks a {
+  margin-bottom: 4px;
+  border-radius: 4px;
+  padding: 5px;
+  width: 33%;
+}
+
+.memberPage .memberLinks img {
+  margin-bottom: 4px;
+  border-radius: 4px;
+  padding: 5px;
+  width: 40%;
+}
+.memberPage .memberLinks img:hover {
+  box-shadow: 0 0 2px 1px red;
+}
+
+.memberPage .memberContent {
+  flex: 1 1 auto;
+  width: 100%;
+  background-color: #111;
+  background-repeat: no-repeat;
+  background-size: 100%;
+  align-self: center;
+  align-content: center;
+}
+
+.memberPage .memberContent img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+  height: 100%;
+}
+
+.memberPage .memberFooter {
+  flex: 0 1 10%;
 }
 
 /*^^^^^^ MemberPage ^^^^^^^^ */
