@@ -26,9 +26,8 @@ const Member = () => {
               </div>
               <div id="memberDetails">
                 <ul>
-                  <li>{member.name}</li>
+                  <li>{member.name} {`(${member.level})`}</li>
                   <li style={{color: `${member.classColor}`}}>{member.class}</li>
-                  <li>Lvl: {member.level}</li>
                   <li style={{color: `${member.itemLevelColor}`}}>iLvl: {member.itemLevel}</li>
                 </ul>
               </div>

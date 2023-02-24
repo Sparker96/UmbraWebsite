@@ -13,15 +13,9 @@ const Home = () => {
 
   return (
     <div className="homePage">
-    <h1>Umbra Guild</h1>
-    <h2>Illidan</h2>
-    <p>We are a Top 100 raiding and Mythic+ guild that is CE (cutting edge) focused. Progression is currently 4/8 Mythic and 8/8 Heroic. We are Looking for RetPal/Hpriest/PresEvoker/Mage/Competitive DPS players
-
-Right now we are striving to be a top 100 2 day raiding guild and are working hard to achieve that end goal.
-
-If you are interested in joining us, please add Rageyy#1452 bnet / rageyy#4684 discord or apply to Umbra on Illidan through the guild app in-game. 
-
-Thank you and we look forward to hear from you!</p>
+    <h1>{guild.name} Guild</h1>
+    <h2>{guild.server}</h2>
+    <p>{guild.description}</p>
     </div>
   );
 };

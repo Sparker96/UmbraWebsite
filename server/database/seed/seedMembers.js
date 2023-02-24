@@ -1,7 +1,6 @@
 const axios = require("axios");
-const db = require("./db");
-const { fetchToken } = require("../index");
-const { Token, Member, Raider, Class } = require("./models/index");
+const db = require("../db");
+const { Token, Member } = require("../models/index");
 
 const BEGIN_URL_CHARACTER =
   "https://us.api.blizzard.com/profile/wow/character/illidan/";
@@ -59,6 +58,39 @@ function roleFinder(spec) {
   }
 }
 
+function classFinder(rankId) {
+  switch (rankId) {
+    case 1:
+      return "Warrior";
+    case 2:
+      return "Paladin";
+    case 3:
+      return "Hunter";
+    case 4:
+      return "Rogue";
+    case 5:
+      return "Priest";
+    case 6:
+      return "Death Knight";
+    case 7:
+      return "Shaman";
+    case 8:
+      return "Mage";
+    case 9:
+      return "Warlock";
+    case 10:
+      return "Monk";
+    case 11:
+      return "Druid";
+    case 12:
+      return "Demon Hunter";
+    case 13:
+      return "Evoker";
+    default:
+      return null;
+  }
+}
+
 function classColor(charClass) {
   switch (charClass) {
     case "Death Knight":
@@ -113,20 +145,7 @@ function itemLevelColor(itemLevel) {
   } else return "Gray";
 }
 
-async function seedClass() {
-  try {
-    let { data } = await axios.get(
-      `${BEGIN_URL_CLASS}index${CONFIG_URL_DATA}${await GET_TOKEN()}`
-    );
-    const classes = await Class.bulkCreate(data.classes);
-  } catch (err) {
-    console.error("Oh noes! Something went wrong!");
-    console.error(err);
-    db.close();
-  }
-}
-
-async function seedMembers() {
+module.exports = async function seedMembers() {
   try {
     let { data } = await axios.get(
       `${BEGIN_URL_GUILD}/roster${CONFIG_URL_PLAYER}${await GET_TOKEN()}`
@@ -135,7 +154,7 @@ async function seedMembers() {
     data.members.forEach(async (member, i) => {
       member.character.guildRankId = member.rank;
       member.character.guildRank = rankFinder(member.rank);
-      let charClass = await Class.findByPk(member.character.playable_class.id);
+      member.character.class = classFinder(member.character.playable_class.id);
       await setTimeout(async () => {
         try {
           if (member.character.level !== 1) {
@@ -145,9 +164,8 @@ async function seedMembers() {
               );
               member.character.spec = data.active_spec.name;
               member.character.role = roleFinder(data.active_spec.name);
-              member.character.class = charClass.name;
-              member.character.classColor = classColor(charClass.name);
-              member.character.playable_class.name = charClass.name;
+              member.character.classColor = classColor(member.character.class);
+              member.character.playable_class.name = member.character.class;
               member.character.itemLevel = data.average_item_level;
               member.character.itemLevelColor = itemLevelColor(
                 member.character.itemLevel
@@ -162,7 +180,7 @@ async function seedMembers() {
               member.character.mainMedia = data.assets[2].value;
               member.character.mainRawMedia = data.assets[3].value;
             } catch (err) {
-              console.log("probz svensif");
+              console.log("Problem Loading:", member.character.name);
               data =
                 "https://www.citypng.com/public/uploads/preview/png-red-question-symbol-mark-icon-11664604913fofuexjtok.png";
               member.character.avatarMedia = data;
@@ -182,18 +200,3 @@ async function seedMembers() {
     db.close();
   }
 }
-
-async function seed() {
-  try {
-    await db.sync({ force: true });
-    await Token.create({ access_token: await fetchToken() });
-    seedClass();
-    seedMembers();
-  } catch (err) {
-    console.error("Oh noes! Something went wrong!");
-    console.error(err);
-    db.close();
-  }
-}
-
-module.exports = seed;

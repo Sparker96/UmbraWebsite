@@ -9,55 +9,42 @@ const Member = db.define("member", {
   },
   class: {
     type: Sequelize.STRING,
-    allowNull: false,
   },
   classColor: {
     type: Sequelize.STRING,
-    allowNull: false,
   },
   spec: {
     type: Sequelize.STRING,
-    allowNull: false,
   },
   role: {
     type: Sequelize.STRING,
-    allowNull: false,
   },
   guildRankId: {
     type: Sequelize.INTEGER,
-    allowNull: false,
   },
   guildRank: {
     type: Sequelize.STRING,
-    allowNull: false,
   },
   level: {
     type: Sequelize.INTEGER,
-    allowNull: false,
   },
   itemLevel: {
     type: Sequelize.INTEGER,
-    allowNull: false,
   },
   itemLevelColor: {
     type: Sequelize.STRING,
-    allowNull: false,
   },
   avatarMedia: {
     type: Sequelize.STRING,
-    allowNull: false,
   },
   insetMedia: {
     type: Sequelize.STRING,
-    allowNull: false,
   },
   mainMedia: {
     type: Sequelize.STRING,
-    allowNull: false,
   },
   mainRawMedia: {
     type: Sequelize.STRING,
-    allowNull: false,
   },
 });
 

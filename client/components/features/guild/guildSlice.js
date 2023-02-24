@@ -6,7 +6,7 @@ const initialState = [];
 export const fetchGuildAsync = createAsyncThunk("guild", async () => {
   try {
     const { data } = await axios.get(`/api/guild`);
-    return data.name;
+    return data;
   } catch (err) {
     console.log(err);
   }
