@@ -18,7 +18,7 @@ const router = require("express").Router();
 router.get("/", async function (req, res, next) {
     console.log("hit api")
    const { data } = await axios.get(
-     `${BEGIN_URL_CHARACTER}/index${CONFIG_URL}${await GET_TOKEN()}`
+     `${BEGIN_URL_CLASS}index${CONFIG_URL}${await GET_TOKEN()}`
    );
   res.send(data);
 });
