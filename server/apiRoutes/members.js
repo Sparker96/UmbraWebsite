@@ -1,5 +1,4 @@
 const { Member } = require("../database/models/index");
-const axios = require("axios");
 
 // apiRoutes/members.js
 const router = require("express").Router();

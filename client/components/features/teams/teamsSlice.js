@@ -1,16 +1,16 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const initialState = [];
+const initialState = {main:null};
 
-export const fetchSomethingAsync = createAsyncThunk("something", async () => {
-    try {
-      const { data } = await axios.get(`/api/testRoute`);
-      return data;
-    } catch (err) {
-      console.log(err);
-    }
-  });
+export const fetchRaidersAsync = createAsyncThunk("raiders", async () => {
+  try {
+    const { data } = await axios.get(`/api/raiders`);
+    return data;
+  } catch (err) {
+    console.log(err);
+  }
+});
 
 
   const teamsSlice = createSlice({
@@ -18,8 +18,8 @@ export const fetchSomethingAsync = createAsyncThunk("something", async () => {
     initialState,
     reducers: {},
     extraReducers: (builder) => {
-      builder.addCase(fetchSomethingAsync.fulfilled, (state, action) => {
-        return action.payload;
+      builder.addCase(fetchRaidersAsync.fulfilled, (state, action) => {
+        state.main = action.payload;
       });
     },
   });

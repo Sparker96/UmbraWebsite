@@ -2,16 +2,17 @@ const axios = require("axios");
 const db = require("../db");
 const { Token, Guild } = require("../models/index");
 
-const BEGIN_URL_CHARACTER =
-  "https://us.api.blizzard.com/profile/wow/character/illidan/";
+// const BEGIN_URL_CHARACTER =
+//   "https://us.api.blizzard.com/profile/wow/character/illidan/";
+// const BEGIN_URL_CLASS = "https://us.api.blizzard.com/data/wow/playable-class/";
+// const CONFIG_URL_DATA = "?namespace=static-us&locale=en_US";
+
 const BEGIN_URL_GUILD =
   "https://us.api.blizzard.com/data/wow/guild/illidan/umbra";
 const CONFIG_URL_PLAYER = "?namespace=profile-us&locale=en_US";
-const BEGIN_URL_CLASS = "https://us.api.blizzard.com/data/wow/playable-class/";
-const CONFIG_URL_DATA = "?namespace=static-us&locale=en_US";
 const GET_TOKEN = async () => {
   const { dataValues } = await Token.findByPk(1);
-  return `&access_token=${dataValues.access_token}`;
+  return `&access_token=${dataValues.access_token_bnet}`;
 };
 
 module.exports = async function seedGuild() {

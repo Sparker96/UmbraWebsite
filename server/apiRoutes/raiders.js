@@ -1,8 +1,16 @@
+const { Member } = require("../database/models/index");
+
 // apiRoutes/raiders.js
 const router = require('express').Router();
 
 // matches GET requests to /api/raiders/
-router.get('/', function (req, res, next) { /* etc */});
+router.get("/", async function (req, res, next) {
+    const data = await Member.findAll({where:{isRaider: true}});
+    res.send(data);
+  });
+  
+
+  
 
 // matches POST requests to /api/raiders/
 router.post('/', function (req, res, next) { /* etc */});

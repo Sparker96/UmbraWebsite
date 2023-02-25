@@ -2,39 +2,31 @@ const axios = require("axios");
 const db = require("../db");
 const { Token, Member } = require("../models/index");
 
+// const BEGIN_URL_CLASS = "https://us.api.blizzard.com/data/wow/playable-class/";
+// const CONFIG_URL_DATA = "?namespace=static-us&locale=en_US";
+
 const BEGIN_URL_CHARACTER =
   "https://us.api.blizzard.com/profile/wow/character/illidan/";
 const BEGIN_URL_GUILD =
   "https://us.api.blizzard.com/data/wow/guild/illidan/umbra";
 const CONFIG_URL_PLAYER = "?namespace=profile-us&locale=en_US";
-const BEGIN_URL_CLASS = "https://us.api.blizzard.com/data/wow/playable-class/";
-const CONFIG_URL_DATA = "?namespace=static-us&locale=en_US";
 const GET_TOKEN = async () => {
   const { dataValues } = await Token.findByPk(1);
-  return `&access_token=${dataValues.access_token}`;
+  return `&access_token=${dataValues.access_token_bnet}`;
 };
 
-function rankFinder(rankId) {
-  switch (rankId) {
-    case 0:
-      return "Guild Master";
-    case 1:
-      return "CO-Guild Master";
-    case 2:
-      return "Officer";
-    case 3:
-      return "Officer Alt";
-    case 4:
-      return "Core Raider";
-    case 5:
-      return "Core Sub";
-    case 6:
-      return "Trial Raider";
-    case 7:
-      return "Member";
-    default:
-      return null;
-  }
+function guildRankCalc(rankId) {
+  let rankArr = [
+    "Guild Master",
+    "CO-Guild Master",
+    "Officer",
+    "Officer Alt",
+    "Core Raider",
+    "Core Sub",
+    "Trial Raider",
+    "Member",
+  ];
+  return rankArr[rankId];
 }
 
 function roleFinder(spec) {
@@ -58,89 +50,88 @@ function roleFinder(spec) {
   }
 }
 
-function classFinder(rankId) {
-  switch (rankId) {
-    case 1:
-      return "Warrior";
-    case 2:
-      return "Paladin";
-    case 3:
-      return "Hunter";
-    case 4:
-      return "Rogue";
-    case 5:
-      return "Priest";
-    case 6:
-      return "Death Knight";
-    case 7:
-      return "Shaman";
-    case 8:
-      return "Mage";
-    case 9:
-      return "Warlock";
-    case 10:
-      return "Monk";
-    case 11:
-      return "Druid";
-    case 12:
-      return "Demon Hunter";
-    case 13:
-      return "Evoker";
-    default:
-      return null;
-  }
+function classFinder(classId) {
+  let classArr = [
+    null,
+    "Warrior",
+    "Paladin",
+    "Hunter",
+    "Rogue",
+    "Priest",
+    "Death Knight",
+    "Shaman",
+    "Mage",
+    "Warlock",
+    "Monk",
+    "Druid",
+    "Demon Hunter",
+    "Evoker",
+  ];
+  return classArr[classId];
 }
 
 function classColor(charClass) {
-  switch (charClass) {
-    case "Death Knight":
-      return "#C41E3A";
-    case "Demon Hunter":
-      return "#A330C9";
-    case "Druid":
-      return "#FF7C0A";
-    case "Evoker":
-      return "#33937F";
-    case "Hunter":
-      return "#AAD372";
-    case "Mage":
-      return "#3FC7EB";
-    case "Monk":
-      return "#00FF98";
-    case "Paladin":
-      return "#F48CBA";
-    case "Priest":
-      return "#FFFFFF";
-    case "Rogue":
-      return "#FFF468";
-    case "Shaman":
-      return "#0070DD";
-    case "Warlock":
-      return "#8788EE";
-    case "Warrior":
-      return "#C69B6D";
-    default:
-      return null;
-  }
+  let classColorObj = {
+    "Death Knight": "#C41E3A",
+    "Demon Hunter": "#A330C9",
+    Druid: "#FF7C0A",
+    Evoker: "#33937F",
+    Hunter: "#AAD372",
+    Mage: "#3FC7EB",
+    Monk: "#00FF98",
+    Paladin: "#F48CBA",
+    Priest: "#FFFFFF",
+    Rogue: "#FFF468",
+    Shaman: "#0070DD",
+    Warlock: "#8788EE",
+    Warrior: "#C69B6D",
+  };
+  return classColorObj[charClass];
+}
+
+function isRaider(name) {
+ let raiderArr = ["Seidou",
+ "Veranysla",
+ "Seagk",
+ "Töasterg",
+ "Goggl",
+ "Seineren",
+ "Holylitez",
+ "Killars",
+ "Fubes",
+ "Warsavant",
+ "Nttdk",
+ "Keldrimp",
+ "Jyxti",
+ "Bearhots",
+ "Carnrac",
+ "Muajawar",
+ "Stickybeast",
+ "Schyllidan",
+ "Sheatszu"]
+  return raiderArr.includes(name);
 }
 
 function itemLevelColor(itemLevel) {
   if (itemLevel > 420) {
-    return "Red";
+    return "Biege";
   }
-  if (itemLevel > 415) {
+  if (itemLevel >= 418) {
+    return "Pink";
+  }
+  if (itemLevel >= 415) {
     return "Orange";
   }
-  if (itemLevel > 410) {
+  if (itemLevel >= 410) {
     return "Purple";
   }
-  if (itemLevel > 400) {
+  if (itemLevel >= 405) {
     return "Blue";
   }
-  if (itemLevel > 380) {
+  if (itemLevel >= 400) {
     return "Green";
   }
-  if (itemLevel > 350) {
+  if (itemLevel >= 390) {
     return "White";
   } else return "Gray";
 }
@@ -153,8 +144,9 @@ module.exports = async function seedMembers() {
 
     data.members.forEach(async (member, i) => {
       member.character.guildRankId = member.rank;
-      member.character.guildRank = rankFinder(member.rank);
+      member.character.guildRank = guildRankCalc(member.rank);
       member.character.class = classFinder(member.character.playable_class.id);
+      member.character.isRaider = isRaider(member.character.name);
       await setTimeout(async () => {
         try {
           if (member.character.level !== 1) {
@@ -192,7 +184,7 @@ module.exports = async function seedMembers() {
               let { data } = await axios.get(
                 `https://raider.io/api/v1/characters/profile?region=us&realm=illidan&name=${member.character.name}&fields=mythic_plus_scores`
               );
-              member.character.mythicPlusScore = data.mythic_plus_scores.all
+              member.character.mythicPlusScore = data.mythic_plus_scores.all;
             } catch (err) {}
 
             Member.create(member.character);

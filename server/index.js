@@ -2,32 +2,8 @@ const path = require("path");
 const express = require("express");
 const morgan = require("morgan");
 const app = express();
-require("dotenv").config();
 const axios = require("axios");
-
-
-//Getting Oauth token from blizzard
-const fetchToken = async () => {
-    try {
-      const { data } = await axios.post(
-        "https://oauth.battle.net/token",
-        new URLSearchParams({
-          grant_type: "client_credentials",
-        }),
-        {
-          auth: {
-            username: `${process.env.BNET_OAUTH_CLIENT_ID}`,
-            password: `${process.env.BNET_OAUTH_CLIENT_SECRET}`,
-          },
-        }
-      );
-      return data.access_token;
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-
+require("dotenv").config();
 
 //Logging Middleware
 app.use(morgan("dev"));
@@ -54,4 +30,4 @@ app.use(function (err, req, res, next) {
   res.status(err.status || 500).send(err.message || "Internal server error.");
 });
 
-module.exports = { app, fetchToken};
+module.exports = { app };

@@ -19,6 +19,9 @@ const Member = db.define("member", {
   role: {
     type: Sequelize.STRING,
   },
+  isRaider: {
+    type: Sequelize.BOOLEAN,
+  },
   guildRankId: {
     type: Sequelize.INTEGER,
   },
