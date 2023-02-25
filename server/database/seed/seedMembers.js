@@ -188,6 +188,12 @@ module.exports = async function seedMembers() {
               member.character.mainMedia = data;
               member.character.mainRawMedia = data;
             }
+            try {
+              let { data } = await axios.get(
+                `https://raider.io/api/v1/characters/profile?region=us&realm=illidan&name=${member.character.name}&fields=mythic_plus_scores`
+              );
+              member.character.mythicPlusScore = data.mythic_plus_scores.all
+            } catch (err) {}
 
             Member.create(member.character);
           }
@@ -199,4 +205,4 @@ module.exports = async function seedMembers() {
     console.error(err);
     db.close();
   }
-}
+};

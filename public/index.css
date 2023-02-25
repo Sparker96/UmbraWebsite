@@ -83,6 +83,13 @@ th {
   background-color: rgb(68, 4, 68);
 }
 
+.membersTable th {
+  background-color: #c0c0c0;
+  color: rgb(68, 4, 68);
+  text-align: center;
+  padding: 8px;
+}
+
 /* unvisited link */
 .membersTable a:link {
   color: white;

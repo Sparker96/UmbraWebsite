@@ -44,7 +44,7 @@ module.exports = async function seedGuild() {
         data.raid_rankings
       )[0].mythic.realm;
     } catch (err) {}
-    guild.description = `We are a Top 100 raiding and Mythic+ guild that is CE (cutting edge) focused. Progression is currently 4/8 Mythic and 8/8 Heroic. We are Looking for RetPal/Hpriest/PresEvoker/Mage/Competitive DPS players
+    guild.description = `We are a Top 100 raiding and Mythic+ guild that is CE (cutting edge) focused. Progression is currently ${guild.progression}ythic and 8/8 Heroic. We are Looking for RetPal/Hpriest/PresEvoker/Mage/Competitive DPS players
 
     Right now we are striving to be a top 100 2 day raiding guild and are working hard to achieve that end goal.
     
