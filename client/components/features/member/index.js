@@ -29,7 +29,7 @@ const Member = () => {
                   <li>{member.name} {`(${member.level})`}</li>
                   <li style={{color: `${member.classColor}`}}>{member.spec} {member.class}</li>
                   <li style={{color: `${member.itemLevelColor}`}}>iLvl: {member.itemLevel}</li>
-                  <li>M+ Score: {member.mythicPlusScore ? member.mythicPlusScore : 0}</li>
+                  <li style={{color: `${member.mythicPlusColor}`}}>M+ Score: {member.mythicPlusScore ? member.mythicPlusScore : 0}</li>
                 </ul>
               </div>
             </div>

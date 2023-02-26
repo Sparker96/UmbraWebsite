@@ -201,6 +201,7 @@ th {
   display: flex;
   flex-flow: row wrap;
   justify-content: space-around;
+  border: 1px solid black;
   background-color: rgb(65, 37, 65);
 }
 
@@ -218,6 +219,7 @@ th {
 #raiderAvatar>img{
   width: 100%;
   height: 100%;
+  border: 1px solid black;
 }
 
 #raiderDetails ul{
@@ -226,6 +228,12 @@ th {
   margin: 5px;
 }
 
+#raiderFooter {
+  background-color: rgb(105, 6, 6);
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+  padding: 16px;
+}
 
 /* unvisited link */
 .mainRaiders a:link {

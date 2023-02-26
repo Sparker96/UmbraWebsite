@@ -1,6 +1,7 @@
 const axios = require("axios");
 const db = require("../db");
-const { Token, Member } = require("../models/index");
+const { Op } = require("sequelize");
+const { Token, Member, MPlusColor } = require("../models/index");
 
 // const BEGIN_URL_CLASS = "https://us.api.blizzard.com/data/wow/playable-class/";
 // const CONFIG_URL_DATA = "?namespace=static-us&locale=en_US";
@@ -90,25 +91,27 @@ function classColor(charClass) {
 }
 
 function isRaider(name) {
- let raiderArr = ["Seidou",
- "Veranysla",
- "Seagk",
- "Töasterg",
- "Goggl",
- "Seineren",
- "Holylitez",
- "Killars",
- "Fubes",
- "Warsavant",
- "Nttdk",
- "Keldrimp",
- "Jyxti",
- "Bearhots",
- "Carnrac",
- "Muajawar",
- "Stickybeast",
- "Schyllidan",
- "Sheatszu"]
+  let raiderArr = [
+    "Seidou",
+    "Veranysla",
+    "Seagk",
+    "Töasterg",
+    "Goggl",
+    "Seineren",
+    "Holylitez",
+    "Killars",
+    "Fubes",
+    "Warsavant",
+    "Nttdk",
+    "Keldrimp",
+    "Jyxti",
+    "Bearhots",
+    "Carnrac",
+    "Muajawar",
+    "Stickybeast",
+    "Schyllidan",
+    "Sheatszu",
+  ];
   return raiderArr.includes(name);
 }
 
@@ -185,6 +188,12 @@ module.exports = async function seedMembers() {
                 `https://raider.io/api/v1/characters/profile?region=us&realm=illidan&name=${member.character.name}&fields=mythic_plus_scores`
               );
               member.character.mythicPlusScore = data.mythic_plus_scores.all;
+              let { dataValues } = await MPlusColor.findOne({
+                where: {
+                  score: { [Op.lte]: member.character.mythicPlusScore },
+                },
+              });
+              member.character.mythicPlusColor = dataValues.rgbHex;
             } catch (err) {}
 
             Member.create(member.character);

@@ -57,14 +57,10 @@ const Teams = () => {
                         <li style={{ color: `${raider.itemLevelColor}` }}>
                           iLvl: {raider.itemLevel}
                         </li>
-                        <li>
-                          M+ Score: {raider.mythicPlusScore}
-                        </li>
-                        <li>
-                          {raider.guildRank}
-                        </li>
+                        <li style={{ color: `${raider.mythicPlusColor}` }}>M+ Score: {raider.mythicPlusScore}</li>
                       </ul>
                     </div>
+                    <div id="raiderFooter"> {raider.guildRank} </div>
                   </div>
                 </Link>
               );

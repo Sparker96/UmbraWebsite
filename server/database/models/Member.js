@@ -40,6 +40,9 @@ const Member = db.define("member", {
   mythicPlusScore: {
     type: Sequelize.FLOAT,
   },
+  mythicPlusColor: {
+    type: Sequelize.STRING,
+  },
   avatarMedia: {
     type: Sequelize.STRING,
   },
