@@ -7,6 +7,9 @@ const Member = db.define("member", {
     unique: true,
     allowNull: false,
   },
+  classId: {
+    type: Sequelize.INTEGER,
+  },
   class: {
     type: Sequelize.STRING,
   },

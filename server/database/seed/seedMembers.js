@@ -148,6 +148,7 @@ module.exports = async function seedMembers() {
     data.members.forEach(async (member, i) => {
       member.character.guildRankId = member.rank;
       member.character.guildRank = guildRankCalc(member.rank);
+      member.character.classId = member.character.playable_class.id;
       member.character.class = classFinder(member.character.playable_class.id);
       member.character.isRaider = isRaider(member.character.name);
       await setTimeout(async () => {

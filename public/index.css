@@ -84,6 +84,8 @@ th {
 }
 
 .membersTable th {
+  position: sticky;
+  top: 0;
   background-color: #c0c0c0;
   color: rgb(68, 4, 68);
   text-align: center;
@@ -212,14 +214,14 @@ th {
   margin: auto;
   flex-direction: column;
   border: 1px solid black;
-  background-color: rgb(68, 4, 30);
+  background-color: #44041E;
   text-align: center;
 }
 
 #raiderAvatar>img{
   width: 100%;
   height: 100%;
-  border: 1px solid black;
+  border-bottom: 1px solid black;
 }
 
 #raiderDetails ul{
@@ -228,10 +230,15 @@ th {
   margin: 5px;
 }
 
+#raiderDetails img{
+  width: 15px;
+  height: 15px;
+}
+
 #raiderFooter {
+  color: white;
   background-color: rgb(105, 6, 6);
   border-top: 1px solid black;
-  border-bottom: 1px solid black;
   padding: 16px;
 }
 
@@ -249,7 +256,7 @@ th {
 
 /* mouse over link */
 .mainRaiders a:hover {
-  color: hotpink;
+  color: rgb(245, 6, 6);
   text-decoration: none;
 }
 
